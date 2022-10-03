@@ -1,3 +1,5 @@
+package interfaces;
+
 import exceptions.InvalidCredentialsException;
 
 import java.rmi.RemoteException;

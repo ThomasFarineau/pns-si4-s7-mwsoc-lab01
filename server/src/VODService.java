@@ -1,4 +1,6 @@
-import java.rmi.Remote;
+import interfaces.IClientBox;
+import interfaces.IVODService;
+
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.List;

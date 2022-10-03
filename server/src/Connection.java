@@ -1,5 +1,6 @@
 import exceptions.InvalidCredentialsException;
-import exceptions.SignInFailed;
+import interfaces.IConnection;
+import interfaces.IVODService;
 
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
