@@ -21,7 +21,11 @@ public class MainClient {
                 vodService = chooseConnectionAction(connection);
             }
             vodService.viewCatalog().forEach(System.out::println);
-
+            Scanner scanner = new Scanner(System.in);
+            System.out.println("Enter the ISBN of the movie you want to watch:");
+            String isbn = scanner.nextLine();
+            ClientBox clientBox = new ClientBox();
+            vodService.playmovie(isbn, clientBox);
 
         } catch (Exception e) {
             System.out.println("Client err: " + e.getMessage());
