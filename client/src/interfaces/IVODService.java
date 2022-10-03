@@ -1,5 +1,8 @@
 package interfaces;
 
+import utils.Bill;
+import utils.MovieDesc;
+
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.util.List;

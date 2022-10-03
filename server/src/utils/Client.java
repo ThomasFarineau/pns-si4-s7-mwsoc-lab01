@@ -1,3 +1,5 @@
+package utils;
+
 public class Client {
     private String mail;
     private String pwd;

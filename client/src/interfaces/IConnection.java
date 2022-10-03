@@ -1,6 +1,7 @@
 package interfaces;
 
 import exceptions.InvalidCredentialsException;
+import exceptions.SignUpFailed;
 
 import java.rmi.RemoteException;
 
