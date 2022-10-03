@@ -1,3 +1,5 @@
+import interfaces.IClientBox;
+
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 
