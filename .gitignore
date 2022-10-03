@@ -8,6 +8,9 @@
 # IDE file
 *.xml
 
+# CSV file
+*.csv
+
 # BlueJ files
 *.ctxt
 

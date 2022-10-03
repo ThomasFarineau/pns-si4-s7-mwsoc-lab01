@@ -26,7 +26,7 @@ public class MainClient {
         }
     }
 
-    private static IVODService chooseConnectionAction(IConnection connection) throws RemoteException, SignUpFailed, InvalidCredentialsException {
+    private static IVODService chooseConnectionAction(IConnection connection) throws RemoteException {
         System.out.println("Choose an action:");
         System.out.println("1. Sign up");
         System.out.println("2. Login");
@@ -39,14 +39,22 @@ public class MainClient {
                 String mail = scanner.next();
                 System.out.println("Password: ");
                 String pwd = scanner.next();
-                connection.signUp(mail, pwd);
+                try {
+                    connection.signUp(mail, pwd);
+                } catch (SignUpFailed e) {
+                    e.printStackTrace();
+                }
             }
             case 2 -> {
                 System.out.println("Mail: ");
                 String mail = scanner.next();
                 System.out.println("Password: ");
                 String pwd = scanner.next();
-                return connection.login(mail, pwd);
+                try {
+                    return connection.login(mail, pwd);
+                } catch (InvalidCredentialsException e) {
+                    e.printStackTrace();
+                }
             }
             case 3 -> System.exit(0);
         }
