@@ -4,6 +4,7 @@ import exceptions.InvalidCredentialsException;
 import exceptions.SignUpFailed;
 import interfaces.IConnection;
 import interfaces.IVODService;
+import utils.MovieDesc;
 
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
@@ -19,6 +20,8 @@ public class MainClient {
             while (vodService == null) {
                 vodService = chooseConnectionAction(connection);
             }
+            //vodService.viewCatalog().forEach(System.out::println);
+
 
         } catch (Exception e) {
             System.out.println("Client err: " + e.getMessage());
@@ -32,7 +35,13 @@ public class MainClient {
         System.out.println("2. Login");
         System.out.println("3. Exit");
         Scanner scanner = new Scanner(System.in);
-        int choice = scanner.nextInt();
+        int choice;
+        try {
+            choice = Integer.parseInt(scanner.next());
+        } catch (NumberFormatException e) {
+            System.out.println("Invalid choice");
+            return null;
+        }
         switch (choice) {
             case 1 -> {
                 System.out.println("Mail: ");
@@ -57,6 +66,7 @@ public class MainClient {
                 }
             }
             case 3 -> System.exit(0);
+            default -> System.out.println("Invalid choice");
         }
         return null;
     }
