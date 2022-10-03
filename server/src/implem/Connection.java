@@ -33,8 +33,8 @@ public class Connection extends UnicastRemoteObject implements IConnection {
     @Override
     public IVODService login(String mail, String pwd) throws RemoteException, InvalidCredentialsException {
         for (Client client : clientList) {
-            if (client.getMail().equals(mail))
-                if (client.getPwd().equals(pwd))
+            if (client.mail().equals(mail))
+                if (client.pwd().equals(pwd))
                     return movies;
         }
         throw new InvalidCredentialsException();
@@ -42,7 +42,7 @@ public class Connection extends UnicastRemoteObject implements IConnection {
 
     private boolean clientAlreadyPresent(String mail) {
         for (Client client : clientList)
-            if (client.getMail().equals(mail))
+            if (client.mail().equals(mail))
                 return true;
         return false;
     }

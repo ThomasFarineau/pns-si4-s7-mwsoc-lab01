@@ -65,4 +65,26 @@ public class DataSaver {
             throw new RuntimeException(e);
         }
     }
+
+    public static List<MovieDesc> getMovies() {
+        File movie = new File(getDataPath().toString(), "movie.csv");
+        List<MovieDesc> movieList = new ArrayList<>();
+        try {
+            FileReader reader = new FileReader(movie);
+            BufferedReader in = new BufferedReader(reader);
+            String line;
+            while ((line = in.readLine()) != null) {
+                String[] data = line.split("§");
+                if(data.length == 3) {
+                    movieList.add(new MovieDesc(data[0], data[1], data[2]));
+                } else {
+                    movieList.add(new MovieDescExtended(data[0], data[1], data[2], data[3].getBytes()));
+                }
+            }
+            in.close();
+            return movieList;
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }

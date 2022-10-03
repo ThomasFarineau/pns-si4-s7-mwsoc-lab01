@@ -3,42 +3,34 @@ package implem;
 import interfaces.IClientBox;
 import interfaces.IVODService;
 import utils.Bill;
+import utils.DataSaver;
 import utils.MovieDesc;
 import utils.MovieDescExtended;
 
+import java.math.BigInteger;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.stream.IntStream;
 
 public class VODService extends UnicastRemoteObject implements IVODService {
     List<MovieDesc> movieDescList;
+    HashMap<String, byte[]> movieMap;
 
     public VODService() throws RemoteException {
         super();
         movieDescList = new ArrayList<>();
+        movieMap = new HashMap<>();
         instantiateMovies();
     }
 
     private void instantiateMovies() {
-        movieDescList.add(new MovieDesc(
-                "La cité de la peur",
-                "8975",
-                "Odile Deray, attachée de presse, vient au Festival de Cannes pour présenter le film " +
-                        "\"Red is Dead\". Malheureusement, celui-ci est d'une telle faiblesse que personne ne souhaite " +
-                        "en faire l'écho. Cependant, lorsque les projectionnistes du long-métrage en question " +
-                        "meurent chacun leur tour dans d'étranges circonstances, \"Red is dead\" bénéficie d'une " +
-                        "incroyable publicité. Serge Karamazov est alors chargé de protéger le nouveau " +
-                        "projectionniste du film."));
-        movieDescList.add(new MovieDescExtended(
-                "La soupe aux choux",
-                "5776",
-                "Le Claude et Le Bombé vivent dans un petit hameau. Le premier est veuf, le second " +
-                        "célibataire. Ensemble, ils passent la plupart de leur temps à trinquer. Une nuit, un " +
-                        "extraterrestre atterrit dans le champ de Claude. Il ne semble pas agressif. Le Bombé est " +
-                        "réveillé, lui aussi, par la lumière émise par la soucoupe, mais l'extraterrestre, que Le " +
-                        "Claude surnommera \"La Denrée,\" le paralyse sur place.",
-                new byte[1000])); // placeholder
+        movieDescList.addAll(DataSaver.getMovies());
+        byte[] alphabet = new byte[26];
+        for (int i = 0; i < 26; i++) alphabet[i] = (byte) ('a' + i);
+        movieDescList.forEach(movieDesc -> movieMap.put(movieDesc.getIsbn(), alphabet));
     }
 
     public List<MovieDesc> viewCatalog() {
@@ -46,6 +38,26 @@ public class VODService extends UnicastRemoteObject implements IVODService {
     }
 
     public Bill playmovie(String isbn, IClientBox box) {
-        return null;
+        byte[] movie = movieMap.get(isbn);
+        String movieName = movieDescList.stream().filter(movieDesc -> movieDesc.getIsbn().equals(isbn)).findFirst().get().getMovieName();
+
+        Runnable runnable = () -> {
+            try {
+                Thread.sleep(5);
+                for (int i = 0; i < movie.length; i = i + 6) {
+                    int length = 6;
+                    if (movie.length - i < length) {
+                        length = movie.length - i;
+                    }
+                    byte[] chunk = new byte[length];
+                    System.arraycopy(movie, i, chunk, 0, length);
+                    box.stream(chunk);
+                }
+            } catch (RemoteException | InterruptedException e) {
+                e.printStackTrace();
+            }
+        };
+        runnable.run();
+        return new Bill(movieName, new BigInteger("100"));
     }
 }
