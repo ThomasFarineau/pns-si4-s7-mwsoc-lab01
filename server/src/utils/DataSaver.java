@@ -9,6 +9,16 @@ import java.util.List;
 public class DataSaver {
     private static Path getDataPath() {
         String path = Paths.get("").toAbsolutePath().toString();
+        //create server folder if it doesn't exist
+        File serverFolder = new File(path + "\\server");
+        if (!serverFolder.exists()) {
+            serverFolder.mkdir();
+        }
+        //create data folder if it doesn't exist
+        File dataFolder = new File(path + "\\server\\data");
+        if (!dataFolder.exists()) {
+            dataFolder.mkdir();
+        }
         return Paths.get(path, "server/data");
     }
 
