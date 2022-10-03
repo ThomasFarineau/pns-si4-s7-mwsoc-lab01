@@ -14,8 +14,8 @@ public class Connection extends UnicastRemoteObject implements IConnection {
     List<Client> clientList;
     IVODService movies;
 
-    protected Connection() throws RemoteException {
-        clientList = new ArrayList<>();
+    public Connection() throws RemoteException {
+        clientList = DataSaver.getClients();
         movies = new VODService();
     }
 
@@ -23,6 +23,7 @@ public class Connection extends UnicastRemoteObject implements IConnection {
     public boolean signUp(String mail, String pwd) throws RemoteException, SignUpFailed {
         if (clientAlreadyPresent(mail))
             throw new SignUpFailed();
+        DataSaver.saveClient(mail, pwd);
         return clientList.add(new Client(mail, pwd));
     }
 
