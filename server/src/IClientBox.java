@@ -1,2 +1,2 @@
-public class IClientBox {
+public interface IClientBox {
 }

@@ -1,9 +1,18 @@
 import java.rmi.Remote;
 import java.rmi.RemoteException;
+import java.rmi.server.UnicastRemoteObject;
 import java.util.List;
 
-public interface VODService extends Remote {
-    List<MovieDesc> viewCatalog() throws RemoteException;
+public class VODService extends UnicastRemoteObject implements IVODService {
+    public VODService() throws RemoteException {
+        super();
+    }
 
-    Bill playmovie(String isbn, IClientBox box) throws RemoteException;
+    public List<MovieDesc> viewCatalog() {
+        return null;
+    }
+
+    public Bill playmovie(String isbn, IClientBox box) {
+        return null;
+    }
 }
