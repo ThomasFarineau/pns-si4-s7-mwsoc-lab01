@@ -1,3 +1,5 @@
+package implem;
+
 import interfaces.IClientBox;
 
 import java.rmi.RemoteException;

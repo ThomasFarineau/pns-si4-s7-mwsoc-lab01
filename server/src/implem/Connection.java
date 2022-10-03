@@ -9,7 +9,6 @@ import utils.DataSaver;
 
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
-import java.util.ArrayList;
 import java.util.List;
 
 public class Connection extends UnicastRemoteObject implements IConnection {
