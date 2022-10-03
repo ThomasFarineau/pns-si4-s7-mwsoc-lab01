@@ -20,7 +20,7 @@ public class MainClient {
             while (vodService == null) {
                 vodService = chooseConnectionAction(connection);
             }
-            //vodService.viewCatalog().forEach(System.out::println);
+            vodService.viewCatalog().forEach(System.out::println);
 
 
         } catch (Exception e) {
