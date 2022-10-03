@@ -13,6 +13,18 @@ public class MovieDesc implements Serializable {
         this.synopsis = synopsis;
     }
 
+    public String getMovieName() {
+        return movieName;
+    }
+
+    public String getIsbn() {
+        return isbn;
+    }
+
+    public String getSynopsis() {
+        return synopsis;
+    }
+
     @Override
     public String toString() {
         return isbn + " " + synopsis;
