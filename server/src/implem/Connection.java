@@ -5,7 +5,6 @@ import exceptions.SignUpFailed;
 import interfaces.IConnection;
 import interfaces.IVODService;
 import utils.Client;
-import utils.VODService;
 
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
@@ -16,7 +15,8 @@ public class Connection extends UnicastRemoteObject implements IConnection {
     List<Client> clientList;
     IVODService movies;
 
-    public Connection() throws RemoteException {
+    protected Connection() throws RemoteException {
+        super();
         clientList = DataSaver.getClients();
         movies = new VODService();
     }
