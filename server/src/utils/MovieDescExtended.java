@@ -10,12 +10,14 @@ public class MovieDescExtended extends MovieDesc {
         this.teaser = teaser;
     }
 
+    /**
+     *
+     * @return the teaser of the movie with the movie name and the synopsis
+     */
     @Override
     public String toString() {
         StringBuilder toReturn = new StringBuilder(super.toString() + " ");
-        for (byte b : teaser) {
-            toReturn.append((char) b);
-        }
+        for (byte b : teaser) toReturn.append((char) b);
         return toReturn.toString();
     }
 }

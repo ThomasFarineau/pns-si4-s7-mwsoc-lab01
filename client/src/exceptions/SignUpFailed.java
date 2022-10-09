@@ -1,8 +1,11 @@
 package exceptions;
 
 public class SignUpFailed extends Exception {
+    /**
+     * Exception thrown when the user tries to sign up with an already existing email
+     */
     @Override
     public void printStackTrace() {
-        System.out.println("E-mail déjà existant !");
+        System.out.println("Email already used !");
     }
 }

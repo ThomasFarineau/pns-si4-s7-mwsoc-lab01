@@ -50,41 +50,45 @@ public class DataSaver {
 
     public static List<Client> getClients() {
         File client = getClientFile();
-        List<Client> clientList = new ArrayList<>();
-        try {
-            FileReader reader = new FileReader(client);
-            BufferedReader in = new BufferedReader(reader);
-            String line;
-            while ((line = in.readLine()) != null) {
-                String[] data = line.split(",");
-                clientList.add(new Client(data[0], data[1]));
+        if (client.exists()) {
+            List<Client> clientList = new ArrayList<>();
+            try {
+                FileReader reader = new FileReader(client);
+                BufferedReader in = new BufferedReader(reader);
+                String line;
+                while ((line = in.readLine()) != null) {
+                    String[] data = line.split(",");
+                    clientList.add(new Client(data[0], data[1]));
+                }
+                in.close();
+                return clientList;
+            } catch (IOException e) {
+                throw new RuntimeException(e);
             }
-            in.close();
-            return clientList;
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+        } else {
+            return new ArrayList<>();
         }
     }
 
     public static List<MovieDesc> getMovies() {
         File movie = new File(getDataPath().toString(), "movie.csv");
-        List<MovieDesc> movieList = new ArrayList<>();
-        try {
-            FileReader reader = new FileReader(movie);
-            BufferedReader in = new BufferedReader(reader);
-            String line;
-            while ((line = in.readLine()) != null) {
-                String[] data = line.split("§");
-                if(data.length == 3) {
-                    movieList.add(new MovieDesc(data[0], data[1], data[2]));
-                } else {
-                    movieList.add(new MovieDescExtended(data[0], data[1], data[2], data[3].getBytes()));
+        if (movie.exists()) {
+            List<MovieDesc> movieList = new ArrayList<>();
+            try {
+                FileReader reader = new FileReader(movie);
+                BufferedReader in = new BufferedReader(reader);
+                String line;
+                while ((line = in.readLine()) != null) {
+                    String[] data = line.split("§");
+                    movieList.add(data.length == 3 ? new MovieDesc(data[0], data[1], data[2]) : new MovieDescExtended(data[0], data[1], data[2], data[3].getBytes()));
                 }
+                in.close();
+                return movieList;
+            } catch (IOException e) {
+                throw new RuntimeException(e);
             }
-            in.close();
-            return movieList;
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+        } else {
+            return new ArrayList<>();
         }
     }
 }
