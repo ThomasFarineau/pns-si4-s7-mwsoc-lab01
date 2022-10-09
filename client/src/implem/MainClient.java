@@ -102,7 +102,10 @@ public class MainClient {
                 }
             }
             case "3" -> System.exit(0);
-            default -> System.out.println("Invalid choice");
+            default -> {
+                System.out.println("Invalid choice");
+                return beforeLogin(connection);
+            }
         }
         return null;
     }
